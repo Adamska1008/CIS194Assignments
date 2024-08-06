@@ -69,6 +69,6 @@ qpow a n = case even n of
     where
       q = qpow a ((n - 1) `div` 2)
 
-fibs4 = streamMap get (streamMap (qpow (M 1 1 1 0)) nats)
+fibs4 = streamMap get $ streamMap (qpow (M 1 1 1 0)) nats
   where
     get (M a b c d) = b
