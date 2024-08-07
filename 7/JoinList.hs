@@ -52,3 +52,5 @@ takeJ i jl@(Append b jlx jly)
   where
     lb = (getSize . size . tag) jlx
     njly = takeJ (i - lb) jly
+
+  
