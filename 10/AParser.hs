@@ -77,3 +77,7 @@ abParser_ = (\x y -> ()) <$> char 'a' <*> char 'b'
 
 intPair :: Parser [Integer]
 intPair = (\x y -> [x, y]) <$> posInt <*> posInt
+
+instance Alternative Parser where
+  empty = Parser (\input -> Nothing)
+  (Parser a1) <|> (Parser a2) = Parser (\input -> a1 input <|> a2 input)
