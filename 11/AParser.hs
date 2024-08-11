@@ -67,10 +67,10 @@ instance Applicative Parser where
     where
       new_fp input = case rf input of
         Nothing -> Nothing
-        Just (f, rest) -> fmap (\(b, last) -> (f b, last)) (a rest)
+        Just (f, rest) -> (\(b, last) -> (f b, last)) <$> a rest
 
 abParser :: Parser (Char, Char)
-abParser = (\x y -> (x, y)) <$> char 'a' <*> char 'b'
+abParser = (,) <$> char 'a' <*> char 'b'
 
 abParser_ :: Parser ()
 abParser_ = (\x y -> ()) <$> char 'a' <*> char 'b'
@@ -79,8 +79,8 @@ intPair :: Parser [Integer]
 intPair = (\x y -> [x, y]) <$> posInt <*> posInt
 
 instance Alternative Parser where
-  empty = Parser (\input -> Nothing)
+  empty = Parser (const Nothing)
   (Parser a1) <|> (Parser a2) = Parser (\input -> a1 input <|> a2 input)
 
 intOUppercase :: Parser ()
-intOUppercase = ((\x -> ()) <$> posInt) <|> ((\x -> ()) <$> satisfy isUpper)
+intOUppercase = (() <$ posInt) <|> (() <$ satisfy isUpper)
