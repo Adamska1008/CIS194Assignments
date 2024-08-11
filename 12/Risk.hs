@@ -65,7 +65,3 @@ successProb bf = (/) <$> successes <*> pure 1000.0
     successes =
       replicateM 1000 (invade bf) >>= \results ->
         return $ fromIntegral $ length $ filter isSuccessful results
-
--- successes = length $ filter isSuccessful results
--- tot = return 1000.0
--- fails = foldl (\acc bf -> (+) <$> acc <*> fmap win bf) (return 0.0) [invade bf | _ <- [1 .. 1000]]
